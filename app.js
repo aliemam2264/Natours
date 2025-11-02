@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 // Limit requests from the same API.
 const limiter = rateLimit({
@@ -66,6 +67,9 @@ app.use(
     ],
   }),
 );
+
+// This middleware will compress all the text that sent to client.
+app.use(compression());
 
 // Test middleware.
 app.use((req, res, next) => {
