@@ -33,3 +33,11 @@ process.on('unhandledRejection', (err) => {
     process.exit(1); // 1 -> stands for unhandled rejection &&& 0 -> stands for sucess.
   });
 });
+
+// Responding to the SIGTERM signal.
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('💥 Process terminated!');
+  });
+});

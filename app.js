@@ -18,6 +18,9 @@ const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
+// Trust proxy because Heroku work as a proxy.
+app.enable('trust proxy');
+
 // Setting the view engine to 'Pug'
 app.set('view engine', 'pug');
 // Where our pug templates are located
